@@ -1,11 +1,11 @@
-from typing import Any
 import shelve
+from typing import Any
+from application.base_db import BaseDb
 
-class DbWrite:            
+class DbWrite(BaseDb):            
 
-    def __init__(self, filename):
-        # print(filename)
-        self.db = shelve.open(filename=filename)
+    def __init__(self, *args, **kwargs):        
+        super().__init__(*args, **kwargs)        
 
     def __del__(self):
         if self.db: self.db.close()
