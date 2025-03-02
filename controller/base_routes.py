@@ -39,4 +39,4 @@ def set_routes(server: Flask):
         response = cursor.write_to_db(key, value) or False
         if not response: return error_response("Internal Server Error", 500)
 
-        return success_response("Resource creation done", 200)    
+        return success_response("Resource creation done", 201)    
