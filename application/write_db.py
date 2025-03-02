@@ -13,4 +13,10 @@ class DbWrite(BaseDb):
     def write_to_db(self, key: str, value: Any) -> bool:
         # if not self.db: raise 
         self.db[key] = value    
-        return True        
+        return True 
+
+    def delete_from_db(self, key: str) -> bool:
+        if key in self.db:
+            del self.db[key]
+            return True
+        return False
