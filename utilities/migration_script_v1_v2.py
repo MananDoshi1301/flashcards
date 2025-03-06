@@ -58,6 +58,14 @@ class MigrateToV2:
             # add to new db
             self.new_db[new_key] = json.dumps(package)  
         print()
+    
+    def print_og_keys(self):
+        for k in list(self.db.keys()):
+            v = self.db[k]
+            # Decode k, v
+            key = self.__decode(k)
+            value_json = self.__decode(v)
+            print(key, value_json)
 
     def print_keys(self):
 
@@ -76,6 +84,7 @@ if __name__ == "__main__":
     filename = "3_data"    
     abs_path = input("Absolute path: ")
     migrate_manager = MigrateToV2(old_filename=filename, abs_path=abs_path)
+    migrate_manager.print_og_keys()
     migrate_manager.migrate()
     print("Printing keys")
     migrate_manager.print_keys()    
