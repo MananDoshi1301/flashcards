@@ -1,5 +1,5 @@
 import os, json
-# import dbm.sqlite3 as sqlite3
+import dbm.ndbm as ndbm
 import dbm as sqlite3
 
 def get_data_path(filename: str = None):
@@ -24,8 +24,8 @@ class MigrateToV2:
             self.new_db_path = os.path.join(abs_path, newfilename)
             print("Opening Absolute paths!")
             
-        self.db = sqlite3.open(self.db_path, 'c')
-        self.new_db = sqlite3.open(self.new_db_path, 'c')
+        self.db = sqlite3.open(self.db_path, 'r')
+        self.new_db = ndbm.open(self.new_db_path, 'c')
         print("Both dbs opened!")
     
     def __del__(self):
@@ -77,6 +77,7 @@ if __name__ == "__main__":
     abs_path = input("Absolute path: ")
     migrate_manager = MigrateToV2(old_filename=filename, abs_path=abs_path)
     migrate_manager.migrate()
-    # migrate_manager.print_keys()    
+    print("Printing keys")
+    migrate_manager.print_keys()    
     # 3_data
     
