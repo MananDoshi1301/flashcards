@@ -29,11 +29,11 @@ def set_routes(server: Flask):
         filename = get_filename(id)
         cursor = DbRead(filename=filename)
         response: dict = cursor.get_cards()
-        questions, result_dict = response["questions"], response["results"]
-        return success_response("Data found successfully!", 200, questions=questions, results=result_dict)
+        data, categories = response["data"], response["categories"]
+        return success_response("Data found successfully!", 200, data=data, categories=categories)
     
     @server.route("/cards/<user_id>", methods=["DELETE"])
-    def delete_cards(user_id):
+    def delete_card(user_id):
         id = int(user_id) if user_id.isdigit() else None        
         if not id: return error_response("Missing Required Credentials", 404)    
         
@@ -50,8 +50,8 @@ def set_routes(server: Flask):
 
 
 
-    @server.route("/new_card/<user_id>", methods=["POST"])
-    def create_new_card(user_id):
+    @server.route("/cards/<user_id>", methods=["POST"])
+    def add_card(user_id):
         id = int(user_id) if user_id.isdigit() else user_id
         data: dict = request.get_json()
         key, value = data.get("key", None), data.get("value", None)

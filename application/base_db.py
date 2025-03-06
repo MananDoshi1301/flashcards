@@ -1,5 +1,5 @@
-import shelve, os
-import dbm
+import shelve, os, dbm, json
+from typing import Any
 from application.db_utilities import get_data_path
 
 class BaseDb:
@@ -13,3 +13,22 @@ class BaseDb:
         if self.db:
             # self.db.sync()
             self.db.close()
+
+    def flush_data(self, key: str, value: dict) -> bool:
+        try:
+            self.db[key] = json.dumps(value) 
+            return True
+        except Exception as e:
+            raise e
+        return False              
+
+    def get_data(self, object, json_load = False):
+        decoded_object = object
+        
+        # Decoding bytes
+        decoded_object = object.decode() if isinstance(object, bytes) else decoded_object
+        
+        # Decoding if json        
+        decoded_object = json.loads(decoded_object) if json_load else decoded_object
+
+        return decoded_object        

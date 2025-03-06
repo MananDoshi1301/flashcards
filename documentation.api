@@ -1,0 +1,43 @@
+route: get_cards
+    endpoint: /cards/<user_id>
+    path_parameter: 
+        -- user_id: int
+    description: 
+        -- Returns all flashcards 
+    method: GET
+    status_code: 400 | 200
+    return_items:
+        -- message: str
+        -- data: Dict[id:str, Dict[str: str]]
+        -- categories: List[str]
+
+route: add_card
+    endpoint: /cards/<user_id>
+    path_parameter: 
+        -- user_id: int
+    request_body:
+        body_items:
+            -- key: str
+            -- value: str
+        body_type: json
+    description:
+        -- Adds a new card to the user
+    method: POST
+    status_code: 500 | 404 | 201
+    return_items:
+        -- message: str
+
+route: delete_card
+    endpoint: /cards/<user_id>
+    path_parameter: 
+        -- user_id: int
+    request_body:
+        body_items:
+            -- key: str
+        body_type: json
+    description:
+        -- Delete a card
+    method: DELETE
+    status_code: 400 | 200
+    return_items:
+        -- message: str
