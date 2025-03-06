@@ -1,4 +1,6 @@
-import os, json, dbm.sqlite3 as sqlite3
+import os, json
+# import dbm.sqlite3 as sqlite3
+import dbm as sqlite3
 
 def get_data_path(filename: str = None):
     base_path = os.getcwd()
