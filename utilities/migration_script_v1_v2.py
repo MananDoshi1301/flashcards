@@ -1,4 +1,4 @@
-import os, json
+import os, json, uuid
 import dbm.ndbm as ndbm
 import dbm as sqlite3
 
@@ -35,13 +35,37 @@ class MigrateToV2:
     def __decode(self, item: bytes):
         return item.decode()
 
+    # def __format_data(self, key, value):
+    #     package = {
+    #         "question": value["question"],
+    #         "answer": value["answer"],
+    #         "category": "None"
+    #     }
+    #     id = key
+    #     return id, package
+
+    # def migrate(self):
+    #     for k in list(self.db.keys()):
+    #         v = self.db[k]
+    #         # Decode k, v
+    #         key = self.__decode(k)
+    #         value_json = self.__decode(v)
+    #         value = json.loads(value_json)
+    #         print(key, type(key), value, type(value))
+    #         # Get data in format
+    #         new_key, package = self.__format_data(key=key, value=value)
+
+    #         # add to new db
+    #         self.new_db[new_key] = json.dumps(package)  
+    #     print()
+
     def __format_data(self, key, value):
         package = {
-            "question": value["question"],
-            "answer": value["answer"],
+            "question": key,
+            "answer": value,
             "category": "None"
         }
-        id = key
+        id = str(uuid.uuid4())
         return id, package
 
     def migrate(self):
@@ -49,8 +73,8 @@ class MigrateToV2:
             v = self.db[k]
             # Decode k, v
             key = self.__decode(k)
-            value_json = self.__decode(v)
-            value = json.loads(value_json)
+            value = self.__decode(v)
+            # value = json.loads(value_json)
             print(key, type(key), value, type(value))
             # Get data in format
             new_key, package = self.__format_data(key=key, value=value)
