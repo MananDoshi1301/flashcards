@@ -1,4 +1,4 @@
-import shelve, os, dbm.sqlite3 as sqlite3, json
+import shelve, os, dbm.ndbm as ndbm, json
 from typing import Any
 from application.db_utilities import get_data_path
 
@@ -7,7 +7,7 @@ class BaseDb:
         
         self.db_path = get_data_path(filename=filename)
         os.makedirs(os.path.dirname(self.db_path), exist_ok=True)        
-        self.db = sqlite3.open(self.db_path, 'c')
+        self.db = ndbm.open(self.db_path, 'c')
 
     def __del__(self):
         if self.db:
