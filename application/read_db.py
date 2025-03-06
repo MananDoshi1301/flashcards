@@ -21,7 +21,8 @@ class DbRead(BaseDb):
                 
         categories = set()
         data = {}
-        for k, v in self.db.items():
+        for k in list(self.db.keys()):
+            v = self.db[k]
             id: str = self.get_data(k)            
             package: dict = self.get_data(v, json_load = True)            
             data[id] = package

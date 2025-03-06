@@ -10,5 +10,5 @@ def success_response(msg: str, code: int, **kwargs):
     return jsonify(package), code
 
 def get_filename(user_id: int) -> str:
-    filename: str = f"{user_id}_data"  
+    filename: str = f"{user_id}_data_v2"  
     return filename
